@@ -1,43 +1,29 @@
-// To parse this JSON data, do
-//
-//     final monAnMd = monAnMdFromJson(jsonString);
+import 'package:flutter/cupertino.dart';
 
-import 'dart:convert';
-
-List<MonAnMd> monAnMdFromJson(String str) =>
-    List<MonAnMd>.from(json.decode(str).map((x) => MonAnMd.fromJson(x)));
-
-String monAnMdToJson(List<MonAnMd> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class MonAnMd {
-  MonAnMd({
-    this.mamonan,
-    this.maquan,
-    this.hinhanh,
-    this.giatien,
-    this.mota,
-  });
-
+class MonAnMd with ChangeNotifier {
   String mamonan;
   String maquan;
   String hinhanh;
   String giatien;
   String mota;
 
-  factory MonAnMd.fromJson(Map<String, dynamic> json) => MonAnMd(
-        mamonan: json["Mamonan"],
-        maquan: json["Maquan"],
-        hinhanh: json["Hinhanh"],
-        giatien: json["Giatien"],
-        mota: json["Mota"],
-      );
+  MonAnMd({this.mamonan, this.maquan, this.hinhanh, this.giatien, this.mota});
 
-  Map<String, dynamic> toJson() => {
-        "Mamonan": mamonan,
-        "Maquan": maquan,
-        "Hinhanh": hinhanh,
-        "Giatien": giatien,
-        "Mota": mota,
-      };
+  MonAnMd.fromJson(Map<String, dynamic> json) {
+    mamonan = json['Mamonan'];
+    maquan = json['Maquan'];
+    hinhanh = json['Hinhanh'];
+    giatien = json['Giatien'];
+    mota = json['Mota'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Mamonan'] = this.mamonan;
+    data['Maquan'] = this.maquan;
+    data['Hinhanh'] = this.hinhanh;
+    data['Giatien'] = this.giatien;
+    data['Mota'] = this.mota;
+    return data;
+  }
 }

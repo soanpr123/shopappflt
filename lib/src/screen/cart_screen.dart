@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopapp/src/provider/auth.dart';
 
 import 'package:shopapp/src/provider/cart.dart';
 import 'package:shopapp/src/provider/order.dart';
+import 'package:shopapp/src/provider/products.dart';
 import 'package:shopapp/src/widgets/cart_item.dart';
-
+import 'package:shopapp/src/widgets/option_buy_foood.dart';
 
 class CartScreen extends StatelessWidget {
   static const routerName = '/cart';
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final userid = Provider.of<Auth>(context).userId;
+    final Maquan = Provider.of<Products>(context).maquan;
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Cart"),
@@ -34,7 +38,12 @@ class CartScreen extends StatelessWidget {
                     label: Text('\$${cart.totalAmount}'),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  OrderButton(cart: cart),
+                  OrderButton(
+                    cart: cart,
+                    maquan: Maquan,
+                    makh: userid,
+                    phiship: "45000",
+                  ),
                 ],
               ),
             ),
@@ -61,13 +70,18 @@ class CartScreen extends StatelessWidget {
 }
 
 class OrderButton extends StatefulWidget {
-  const OrderButton({
-    Key key,
-    @required this.cart,
-  }) : super(key: key);
+  const OrderButton(
+      {Key key,
+      @required this.cart,
+      @required this.maquan,
+      @required this.makh,
+      @required this.phiship})
+      : super(key: key);
 
   final Cart cart;
-
+  final String maquan;
+  final String makh;
+  final String phiship;
   @override
   _OrderButtonState createState() => _OrderButtonState();
 }
@@ -81,21 +95,21 @@ class _OrderButtonState extends State<OrderButton> {
       onPressed: (widget.cart.totalAmount <= 0 || isLoading)
           ? null
           : () async {
-              if (widget.cart.item.length <= 0) {
-                print("no item");
-              } else {
-                setState(() {
-                  isLoading = true;
-                });
-                await Provider.of<Orders>(context, listen: false).addOrder(
-                    widget.cart.item.values.toList(), widget.cart.totalAmount);
-                setState(() {
-                  isLoading = false;
-                });
-                widget.cart.clear();
+                showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Option(
+                          cart: widget.cart,
+                          maquan: widget.maquan,
+                          makh: widget.makh,
+                          phiship: "45000",
+                        ),
+                        behavior: HitTestBehavior.opaque,
+                      );
+                    });
               }
-            },
-      textColor: Theme.of(context).primaryColor,
     );
   }
 }

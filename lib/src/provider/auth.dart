@@ -48,7 +48,6 @@ class Auth with ChangeNotifier {
       _userId = responseData['localId'];
       _expiryDate = DateTime.now()
           .add(Duration(seconds: int.parse(responseData['expiresIn'])));
-      _autoLogout();
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
       final userData = jsonEncode({
@@ -79,7 +78,6 @@ class Auth with ChangeNotifier {
     _userId = extracUserData['userid'];
     _expiryDate = ecpiryDate;
     notifyListeners();
-    _autoLogout();
     return true;
   }
 
@@ -91,25 +89,18 @@ class Auth with ChangeNotifier {
     return _authenticate(email, password, 'accounts:signInWithPassword');
   }
 
-  Future<void> logout() {
+  Future<void> logout() async{
     _token = null;
     _userId = null;
     _expiryDate = null;
+    final prefs= await SharedPreferences.getInstance();
+    prefs.clear();
+
     if (_authTimer != null) {
       _authTimer.cancel();
       _authTimer = null;
+
     }
     notifyListeners();
-  }
-
-  Future<void> _autoLogout() async {
-    if (_authTimer != null) {
-      _authTimer.cancel();
-    }
-    final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
-    final prefs= await SharedPreferences.getInstance();
-//    prefs.remove("userData");
-  prefs.clear();
   }
 }

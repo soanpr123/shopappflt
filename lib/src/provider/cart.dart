@@ -5,7 +5,9 @@ class CartItem {
   final String title;
   final int quantity;
   final double price;
-  CartItem({
+
+  CartItem(
+  {
     @required this.id,
     @required this.title,
     @required this.quantity,
@@ -21,6 +23,13 @@ class Cart with ChangeNotifier {
 
   int get itemCount {
     return _item.length;
+  }
+  int get quaity{
+    int quaity=0;
+    _item.forEach((key, value) {
+      quaity=value.quantity;
+    });
+    return quaity;
   }
 double get totalAmount{
     var total=0.0;
@@ -42,7 +51,9 @@ void removeItem(String productID){
               id: existingCartItem.id,
               title: existingCartItem.title,
               price: existingCartItem.price,
-              quantity: existingCartItem.quantity + 1));
+              quantity: existingCartItem.quantity + 1
+
+          ));
     } else {
       _item.putIfAbsent(
           productId,

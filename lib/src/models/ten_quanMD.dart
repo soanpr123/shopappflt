@@ -4,13 +4,15 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 List<TenQuanMd> tenQuanMdFromJson(String str) =>
     List<TenQuanMd>.from(json.decode(str).map((x) => TenQuanMd.fromJson(x)));
 
 String tenQuanMdToJson(List<TenQuanMd> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class TenQuanMd {
+class TenQuanMd with ChangeNotifier {
   TenQuanMd({
     this.maquan,
     this.tenquan,

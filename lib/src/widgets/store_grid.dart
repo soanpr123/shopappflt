@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopapp/src/provider/category.dart';
 
 import 'package:shopapp/src/provider/products.dart';
+import 'package:shopapp/src/provider/store.dart';
 import 'package:shopapp/src/widgets/category_item.dart';
 import 'package:shopapp/src/widgets/product_item.dart';
+import 'package:shopapp/src/widgets/store_item.dart';
 
 
-class Productgrid extends StatelessWidget {
+class StoreGrild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<Products>(context);
+    final productData = Provider.of<Stores>(context);
     final products =productData.items;
     return GridView.builder(
         padding: const EdgeInsets.all(10.0),
@@ -21,10 +24,10 @@ class Productgrid extends StatelessWidget {
         itemCount: products.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
 //              create: (c)=>products[i],
-        value: products[i],
-              child: ProductItem(
+          value: products[i],
+          child: StoreItem(
 //                  products[i].id, products[i].title, products[i].imageUrl
-              ),
-            ));
+          ),
+        ));
   }
 }
