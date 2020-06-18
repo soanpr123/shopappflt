@@ -4,13 +4,15 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 List<LoaiQuanAnMd> loaiQuanAnMdFromJson(String str) => List<LoaiQuanAnMd>.from(
     json.decode(str).map((x) => LoaiQuanAnMd.fromJson(x)));
 
 String loaiQuanAnMdToJson(List<LoaiQuanAnMd> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class LoaiQuanAnMd {
+class LoaiQuanAnMd with ChangeNotifier {
   LoaiQuanAnMd({
     this.maloaiquan,
     this.tenloaiquan,

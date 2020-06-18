@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 
 import 'package:shopapp/src/provider/products.dart';
 import 'package:shopapp/src/widgets/category_item.dart';
+import 'package:shopapp/src/widgets/loaimonan_item.dart';
 import 'package:shopapp/src/widgets/product_item.dart';
 
 
-class Productgrid extends StatelessWidget {
+class LoaiMonAnGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<Products>(context);
@@ -21,10 +22,10 @@ class Productgrid extends StatelessWidget {
         itemCount: products.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
 //              create: (c)=>products[i],
-        value: products[i],
-              child: ProductItem(
+          value: products[i],
+          child: LoaiMonAnItem(
 //                  products[i].id, products[i].title, products[i].imageUrl
-              ),
-            ));
+          ),
+        ));
   }
 }

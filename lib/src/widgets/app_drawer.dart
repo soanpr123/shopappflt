@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/src/provider/auth.dart';
+import 'package:shopapp/src/screen/category_screen.dart';
 import 'package:shopapp/src/screen/oder_screen.dart';
-import 'package:shopapp/src/screen/user_product_screen.dart';
+
 
 
 class AppDrawer extends StatelessWidget {
@@ -25,20 +26,20 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.payment),
-            title: Text('Orders'),
+            leading: Icon(Icons.category),
+            title: Text('Danh Mục'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+                  .pushReplacementNamed(CategoryScreen.routername);
             },
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('Manage Product'),
+            leading: Icon(Icons.payment),
+            title: Text('Đơn Hàng'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(UserProductScreen.routerName);
+                  .pushReplacementNamed(OrdersScreen.routeName);
             },
           ),
           Divider(),

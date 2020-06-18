@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shopapp/src/provider/cart.dart';
-
+import 'package:shopapp/src/utils/server.dart';
 
 class OdersItem {
   final String id;
@@ -23,40 +23,48 @@ class Orders with ChangeNotifier {
 
   final String authToken;
   final String userId;
-  Orders(this.authToken,this._oder,this.userId);
+  Orders(this.authToken, this._oder, this.userId);
+String _respone;
 
+  String get respone => _respone;
 
   List<OdersItem> get oder => _oder;
 
-  Future<void> addOrder(List<CartItem> cartProduct, double total) async {
-    final url = 'https://shopapp-7ddb2.firebaseio.com/order/$userId.json?auth=$authToken';
+  Future<void> addOrder(
+      List<CartItem> cartProduct,
+      int soluong,
+      double total,
+      String Maquan,
+      String Makh,
+      String Mashipper,
+      String Hinhthuctt,
+      String Phiship,
+      ) async {
     final timestamp = DateTime.now();
-    final response = await http.post(url,
+    final response = await http.post(Server.DONHANG,
         body: json.encode({
-          'id': DateTime.now().toString(),
-          'amount': total,
-          'product': cartProduct
-              .map((cp) => {
-                    'id': cp.id,
-                    'title': cp.title,
-                    'quantity': cp.quantity,
-                    'price': cp.price
-                  })
-              .toList(),
-          'dateTime': timestamp.toIso8601String(),
+          "Maquan": Maquan,
+          "Makh": Makh,
+          "Soluong": soluong,
+          "Mashipper": Mashipper,
+          "Tongtien": total,
+          "Hinhthuctt": Hinhthuctt,
+          "Tgdat": timestamp.toIso8601String(),
+          "Tggiao": timestamp.toIso8601String(),
+          "Phiship": Phiship
         }));
-    _oder.insert(
-        0,
-        OdersItem(
-            id: json.decode(response.body)['name'],
-            amount: total,
-            product: cartProduct,
-            dateTime: timestamp));
+    var data=response.body;
+if(data=="ok"){
+  print("them thành công $data");
+  _respone="ok";
+  print("ok nhé $_respone");
+}
     notifyListeners();
   }
 
   Future<void> fetchData() async {
-    final url = 'https://shopapp-7ddb2.firebaseio.com/order/$userId.json?auth=$authToken';
+    final url =
+        'https://shopapp-7ddb2.firebaseio.com/order/$userId.json?auth=$authToken';
     final response = await http.get(url);
     final List<OdersItem> loaderOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;

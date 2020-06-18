@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/src/provider/auth.dart';
 import 'package:shopapp/src/provider/cart.dart';
+import 'package:shopapp/src/provider/category.dart';
 import 'package:shopapp/src/provider/order.dart';
 import 'package:shopapp/src/provider/products.dart';
+import 'package:shopapp/src/provider/shipper.dart';
+import 'package:shopapp/src/provider/store.dart';
 import 'package:shopapp/src/screen/auth_screen.dart';
 import 'package:shopapp/src/screen/cart_screen.dart';
-import 'package:shopapp/src/screen/edit_product_screen.dart';
+import 'package:shopapp/src/screen/loaimonan_screen.dart';
+
 import 'package:shopapp/src/screen/oder_screen.dart';
 import 'package:shopapp/src/screen/product_detail.dart';
 import 'package:shopapp/src/screen/product_overview_screen.dart';
 import 'package:shopapp/src/screen/splaps_screen.dart';
-import 'package:shopapp/src/screen/user_product_screen.dart';
+import 'package:shopapp/src/screen/category_screen.dart';
+import 'package:shopapp/src/screen/store_screen.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -31,6 +37,15 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider.value(
             value: Cart(),
+          ),
+          ChangeNotifierProvider.value(
+            value: Categorys(),
+          ),
+          ChangeNotifierProvider.value(
+            value: Stores(),
+          ),
+          ChangeNotifierProvider.value(
+            value: Shippers(),
           ),
           ChangeNotifierProxyProvider<Auth, Orders>(
             update: (ctx, auth, priviusProducts) => Orders(
@@ -61,8 +76,9 @@ class MyApp extends StatelessWidget {
                     ProductDeltailScreen(),
                 CartScreen.routerName: (ctx) => CartScreen(),
                 OrdersScreen.routeName: (ctx) => OrdersScreen(),
-                UserProductScreen.routerName: (ctx) => UserProductScreen(),
-                EditProductScreen.routerName: (ctx) => EditProductScreen(),
+                CategoryScreen.routername:(ctx)=>CategoryScreen(),
+                StoreScreen.routername:(ctx)=>StoreScreen(),
+                LoaiMonAnScreen.routername:(ctx)=>LoaiMonAnScreen()
               }),
         ));
   }

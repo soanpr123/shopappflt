@@ -15,7 +15,7 @@ class ProductDeltailScreen extends StatelessWidget {
         Provider.of<Products>(context, listen: false).findByid(productId);
     return Scaffold(
       appBar: AppBar(
-        title: Text(loaderProduct.title),
+        title: Text(loaderProduct.mota),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -24,7 +24,7 @@ class ProductDeltailScreen extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Image.network(
-                loaderProduct.imageUrl,
+                loaderProduct.hinhanh,
                 fit: BoxFit.cover,
               ),
             ),
@@ -32,14 +32,14 @@ class ProductDeltailScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              '\$${loaderProduct.price}',
+              '\$${loaderProduct.giatien}',
               style: TextStyle(color: Colors.grey, fontSize: 20),
             ),
             SizedBox(height: 10,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
                 width: double.infinity,
-                child: Text(loaderProduct.description,textAlign: TextAlign.center,softWrap: true,))
+                child: Text(loaderProduct.mota,textAlign: TextAlign.center,softWrap: true,))
           ],
         ),
       ),

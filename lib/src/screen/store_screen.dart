@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopapp/src/provider/cart.dart';
+import 'package:shopapp/src/provider/category.dart';
 import 'package:shopapp/src/provider/products.dart';
+import 'package:shopapp/src/provider/store.dart';
 import 'package:shopapp/src/widgets/app_drawer.dart';
 import 'package:shopapp/src/widgets/badge.dart';
+import 'package:shopapp/src/widgets/category_grid.dart';
 import 'package:shopapp/src/widgets/product_grid.dart';
+import 'package:shopapp/src/widgets/store_grid.dart';
 
 import 'cart_screen.dart';
 
 
 enum FilterOption { Favorites, ShowAll }
 
-class ProductOverviewScreen extends StatefulWidget {
+class StoreScreen extends StatefulWidget {
+  static const routername="/store_screen";
+  final String id;
+  final String name;
+  StoreScreen({this.id,this.name});
   @override
-  _ProductOverviewScreenState createState() => _ProductOverviewScreenState();
+  _StoreScreenState createState() => _StoreScreenState();
 }
 
-class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
-  var _showFavorites = false;
+class _StoreScreenState extends State<StoreScreen> {
+
   var isInit = true;
   var isLoading = false;
+  String loaiquan="";
   @override
   void initState() {
 //  Provider.of<Products>(context).fetchData();
@@ -32,7 +41,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       setState(() {
         isLoading = true;
       });
-      Provider.of<Products>(context).fetchData().then((_) {
+      Provider.of<Stores>(context).fetchData(widget.id).then((_) {
         setState(() {
           isLoading = false;
         });
@@ -46,25 +55,10 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("MyShop"),
-          actions: <Widget>[
-            Consumer<Cart>(
-              builder: (_, cart, ch) => Badge(
-                child: ch,
-                value: cart.itemCount.toString(),
-              ),
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  Navigator.pushNamed(context, CartScreen.routerName);
-                },
-              ),
-            )
-          ],
+          title: Text(widget.name),
         ),
-        drawer: AppDrawer(),
         body: isLoading
             ? Center(child: CircularProgressIndicator())
-            : Productgrid());
+            : StoreGrild());
   }
 }
